@@ -3,6 +3,8 @@
 *.dll
 *.pdb
 *.cache
-obj/*
-bin/*
-.vs/*
+*/obj/*
+*/bin/*
+*/.vs/*
+*.exe
+*.json
