@@ -1,2 +1,1 @@
-# MrowrBot
- ~ Skyrim Twitch Bot ~
+![Skyrim Twitch Bot](Images/SkyrimTwitchBot_small.png)
