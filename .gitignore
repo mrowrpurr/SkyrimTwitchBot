@@ -1,0 +1,8 @@
+*.resx
+*.resource*
+*.dll
+*.pdb
+*.cache
+obj/*
+bin/*
+.vs/*
