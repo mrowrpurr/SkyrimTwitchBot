@@ -11,6 +11,8 @@ namespace SkyrimTwitchBotLib.Models {
         public static string SKYRIM_DATA_FOLDER;
         public static string TWITCH_BOT_SUBFOLDER_NAME = "SkyrimTwitchBot";
         public static string REDEMPTION_TYPES_FILENAME = "RedemptionTypes.json";
+        public static string VIEWER_SEPTIM_TRACKING_FILENAME = "Viewers.json";
+        public static string PENDING_REDEMPTIONS_FILENAME = "PendingRedemptions.txt";
         public static string STREAMS_SUBFOLDER_NAME = "Streams";
 
         public static string TwitchBotDataDirectory { get => Path.Combine(SKYRIM_DATA_FOLDER, TWITCH_BOT_SUBFOLDER_NAME); }
@@ -21,6 +23,8 @@ namespace SkyrimTwitchBotLib.Models {
                 Directory.CreateDirectory(TwitchBotDataDirectory);
             SetupStreams();
             SetupRedemptionTypes();
+            SetupViewerSeptimTracking();
+            SetupPendingRedemptions();
         }
 
         public static void WriteToFile(object instance, string filename) {
@@ -48,5 +52,20 @@ namespace SkyrimTwitchBotLib.Models {
                 Directory.CreateDirectory(StreamsFolderName);
         }
         public static string GetStreamFilePath(string streamName) => Path.Combine(StreamsFolderName, streamName + ".json");
+
+        public static string ViewerSeptimTrackingFilePath { get => Path.Combine(TwitchBotDataDirectory, VIEWER_SEPTIM_TRACKING_FILENAME);  }
+        public static void SetupViewerSeptimTracking() {
+            if (! File.Exists(ViewerSeptimTrackingFilePath)) {
+                var viewers = new Dictionary<string, SkyrimViewer>();
+                WriteToFile(viewers, ViewerSeptimTrackingFilePath);
+            }
+        }
+
+        public static string PendingRedemptionsFilePath { get => Path.Combine(TwitchBotDataDirectory, PENDING_REDEMPTIONS_FILENAME); }
+        public static void SetupPendingRedemptions() {
+            if (! File.Exists(PendingRedemptionsFilePath)) {
+                File.WriteAllText(PendingRedemptionsFilePath, ""); // touch the file
+            }
+        }
     }
 }

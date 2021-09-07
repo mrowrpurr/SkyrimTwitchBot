@@ -22,6 +22,10 @@ using TwitchLib.Communication.Events;
 namespace SkyrimTwitchBot
 {
     public partial class SkyrimTwitchBotUI : Form {
+
+        int countOfChatMessagesSinceLastInfoMessage = 0;
+        DateTime timeOfLastInfoMessage = DateTime.Now;
+
         string StreamName;
         TwitchBot bot = new TwitchBot();
         bool _initialized = false;
@@ -204,10 +208,59 @@ namespace SkyrimTwitchBot
             ConnectivityLog($"Disconnected");
         }
         void Client_OnWhisperReceived(object sender, OnWhisperReceivedArgs e) {
-            LogEvent($"Whipser Received " + e.WhisperMessage.Username + ": " + e.WhisperMessage.Message);
+            LogEvent($"Whipser Received from {e.WhisperMessage.UserId} " + e.WhisperMessage.Username + ": " + e.WhisperMessage.Message);
+            if (e.WhisperMessage.Message == "!septims") {
+                int userSeptimCount = SkyrimViewerSeptimTracker.GetSeptimCount(e.WhisperMessage.Username);
+                bot.Client.SendWhisper(e.WhisperMessage.Username, $"You currently have {userSeptimCount} septims!");
+            } else {
+                bot.Client.SendWhisper(e.WhisperMessage.Username, "I am Mrowr Purr's bot. Did you mean to ask me for !septims?");
+            }
         }
         void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e) {
-            LogEvent($"Chat Message " + e.ChatMessage.Username + ": " + e.ChatMessage.Message);
+            countOfChatMessagesSinceLastInfoMessage += 1;
+            if ((DateTime.Now - timeOfLastInfoMessage).Minutes > 40 && countOfChatMessagesSinceLastInfoMessage > 20) {
+                countOfChatMessagesSinceLastInfoMessage = 0;
+                timeOfLastInfoMessage = DateTime.Now;
+                bot.Client.SendMessage(Configuration.channelName, "Mrowr Purr authors tutorials on Creation Kit and creating Skyrim Mods at https://www.youtube.com/channel/UCS8mvo8o60dgPQe9WJRp2qQ (Skyrim Scripting)");
+            }
+
+            LogEvent($"Chat Message from {e.ChatMessage.UserId} " + e.ChatMessage.Username + ": " + e.ChatMessage.Message);
+            // Just hack it for right now and check for literal strings, we'll revisit this :)
+            int cost;
+            string message = e.ChatMessage.Message;
+            string username = e.ChatMessage.Username;
+            SkyrimViewerSeptimTracker.TrackChatMessage(username);
+            if (message.StartsWith("!") && message != "!youtube" && message != "!mods") {
+                int currentSeptims = SkyrimViewerSeptimTracker.GetSeptimCount(username);
+                if (message == "!septims") {
+                    bot.Client.SendMessage(Configuration.channelName, $"{username} currently has {currentSeptims} septims");
+                } else if (message == "!youtube") {
+                    bot.Client.SendMessage(Configuration.channelName, "Mrowr Purr authors tutorials on Creation Kit and creating Skyrim Mods at https://www.youtube.com/channel/UCS8mvo8o60dgPQe9WJRp2qQ (Skyrim Scripting)");
+                } else if (message == "!mods") {
+                    bot.Client.SendMessage(Configuration.channelName, "Mrowr Purr's Mod List: https://github.com/mrowrpurr/mods (it is a very short list)");
+                } else if (message.StartsWith("!cheese")) {
+                    cost = 250;
+                    if (currentSeptims >= cost) {
+                        SkyrimViewerSeptimTracker.DeductSeptims(username, cost);
+                        PendingRedemptions.AddPendingRedemption(username, "!cheese");
+                        bot.Client.SendMessage(Configuration.channelName, $"{username} is rolling all the cheese wheels!");
+                    }
+                    else {
+                        bot.Client.SendMessage(Configuration.channelName, $"{username} does not have enough septims for " + message);
+                    }
+                }
+                else if (message.StartsWith("!sweetroll")) {
+                    cost = 250;
+                    if (currentSeptims >= cost) {
+                        SkyrimViewerSeptimTracker.DeductSeptims(username, cost);
+                        PendingRedemptions.AddPendingRedemption(username, "!sweetroll");
+                        bot.Client.SendMessage(Configuration.channelName, $"{username} is making it rain sweetrolls!");
+                    }
+                    else {
+                        bot.Client.SendMessage(Configuration.channelName, $"{username} does not have enough septims for " + message);
+                    }
+                }
+            }
         }
     }
 }
