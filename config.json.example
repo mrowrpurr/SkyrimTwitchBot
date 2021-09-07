@@ -1,6 +1,6 @@
 {
     "botUsername": "MrowrBot",
-    "botChannel": "mrowrpurr",
+    "channelName": "mrowrpurr",
     "accessToken": "Your Access Token Here",
     "skyrimDataFolder": "C:\\Steam\\steamapps\\common\\Skyrim Special Edition\\Data"
 }

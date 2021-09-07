@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SkyrimTwitchBotLib.Models {
-    class StreamRedemption {
+    class PendingRedemptions {
     }
 }

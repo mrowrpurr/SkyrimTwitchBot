@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SkyrimTwitchBotLib.Models
-{
-    class Stream
-    {
+namespace SkyrimTwitchBotLib.Models {
+    class SkyrimStreamRedemption {
     }
 }
