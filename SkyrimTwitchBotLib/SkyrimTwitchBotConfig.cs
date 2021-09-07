@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SkyrimTwitchBotLib {
-    public class JsonConfigData {
+    public class SkyrimTwitchJsonConfigData {
         public string botUsername { get; set; }
         public string channelName { get; set; }
         public string accessToken { get; set; }
@@ -18,10 +18,10 @@ namespace SkyrimTwitchBotLib {
 
         public static string CONFIG_FILENAME = "config.json";
 
-        public static JsonConfigData? ReadConfig() {
+        public static SkyrimTwitchJsonConfigData? ReadConfig() {
             try {
                 using var reader = new StreamReader(CONFIG_FILENAME);
-                return JsonConvert.DeserializeObject<JsonConfigData>(reader.ReadToEnd());
+                return JsonConvert.DeserializeObject<SkyrimTwitchJsonConfigData>(reader.ReadToEnd());
             } catch {
                 return null;
             }

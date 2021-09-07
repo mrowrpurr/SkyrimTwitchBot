@@ -59,6 +59,7 @@ namespace SkyrimTwitchBot
             this.Button_NewStream.TabIndex = 0;
             this.Button_NewStream.Text = "New Stream";
             this.Button_NewStream.UseVisualStyleBackColor = true;
+            this.Button_NewStream.Click += new System.EventHandler(this.Button_NewStream_Click);
             // 
             // Label_BotUsername
             // 
@@ -98,7 +99,6 @@ namespace SkyrimTwitchBot
             // 
             // RichText_EventLog
             // 
-            this.RichText_EventLog.Enabled = false;
             this.RichText_EventLog.Location = new System.Drawing.Point(12, 70);
             this.RichText_EventLog.Name = "RichText_EventLog";
             this.RichText_EventLog.ReadOnly = true;
@@ -128,7 +128,6 @@ namespace SkyrimTwitchBot
             // 
             // RichText_ConnectivityLog
             // 
-            this.RichText_ConnectivityLog.Enabled = false;
             this.RichText_ConnectivityLog.Location = new System.Drawing.Point(12, 296);
             this.RichText_ConnectivityLog.Name = "RichText_ConnectivityLog";
             this.RichText_ConnectivityLog.ReadOnly = true;
@@ -227,6 +226,7 @@ namespace SkyrimTwitchBot
             this.Button_ContinueStream.TabIndex = 19;
             this.Button_ContinueStream.Text = "Continue Stream";
             this.Button_ContinueStream.UseVisualStyleBackColor = true;
+            this.Button_ContinueStream.Click += new System.EventHandler(this.Button_ContinueStream_Click);
             // 
             // SkyrimTwitchBotUI
             // 
