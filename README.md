@@ -1,1 +1,1 @@
-![Skyrim Twitch Bot](Images/SkyrimTwitchBot_small.png)
+![Skyrim Twitch Bot](Images/SkyrimTwitchBot.png)
