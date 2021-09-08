@@ -232,14 +232,19 @@ namespace SkyrimTwitchBot
             SkyrimViewerSeptimTracker.TrackChatMessage(username);
             if (message.StartsWith("!") && message != "!youtube" && message != "!mods") {
                 int currentSeptims = SkyrimViewerSeptimTracker.GetSeptimCount(username);
+                if (username.ToLower() == "mrowrpurr" || username.ToLower() == "mrowrbot") {
+                    currentSeptims = 10000;
+                }
                 if (message == "!septims") {
                     bot.Client.SendMessage(Configuration.channelName, $"{username} currently has {currentSeptims} septims");
                 } else if (message == "!youtube") {
                     bot.Client.SendMessage(Configuration.channelName, "Mrowr Purr authors tutorials on Creation Kit and creating Skyrim Mods at https://www.youtube.com/channel/UCS8mvo8o60dgPQe9WJRp2qQ (Skyrim Scripting)");
                 } else if (message == "!mods") {
                     bot.Client.SendMessage(Configuration.channelName, "Mrowr Purr's Mod List: https://github.com/mrowrpurr/mods (it is a very short list)");
+                } else if (message == "!game") {
+                    bot.Client.SendMessage(Configuration.channelName, "Everyone earns 10 septims per minute | Chat messages earn more(limited) | List of available game commands: !game | Your current septims total: !septims | 100: !cheese | 250: !sweetrolls | 500: !wishlist | 750: !coc | 1000: !strip");
                 } else if (message.StartsWith("!cheese")) {
-                    cost = 250;
+                    cost = 100;
                     if (currentSeptims >= cost) {
                         SkyrimViewerSeptimTracker.DeductSeptims(username, cost);
                         PendingRedemptions.AddPendingRedemption(username, "!cheese");
@@ -258,6 +263,49 @@ namespace SkyrimTwitchBot
                     }
                     else {
                         bot.Client.SendMessage(Configuration.channelName, $"{username} does not have enough septims for " + message);
+                    }
+                }
+                else if (message.StartsWith("!wishlist")) {
+                    cost = 500;
+                    if (currentSeptims >= cost) {
+                        SkyrimViewerSeptimTracker.DeductSeptims(username, cost);
+                        PendingRedemptions.AddPendingRedemption(username, "!wishlist");
+                        bot.Client.SendMessage(Configuration.channelName, $"{username} is gifting the player an item from the wishlist");
+                    }
+                    else {
+                        bot.Client.SendMessage(Configuration.channelName, $"{username} does not have enough septims for " + message);
+                    }
+                }
+                else if (message.StartsWith("!strip")) {
+                    cost = 1000;
+                    if (currentSeptims >= cost) {
+                        SkyrimViewerSeptimTracker.DeductSeptims(username, cost);
+                        PendingRedemptions.AddPendingRedemption(username, "!strip");
+                        bot.Client.SendMessage(Configuration.channelName, $"{username} is stripping the player, oh my!");
+                    }
+                    else {
+                        bot.Client.SendMessage(Configuration.channelName, $"{username} does not have enough septims for " + message);
+                    }
+                }
+                else if (message.StartsWith("!coc")) {
+                    if (message == "!coc") {
+                        bot.Client.SendMessage(Configuration.channelName, $"!coc requires a valid location to teleport to");
+                    } else {
+                        string[] parts = message.Split(" ");
+                        if (parts.Length != 2) {
+                            bot.Client.SendMessage(Configuration.channelName, $"!coc requires a valid location to teleport to");
+                        } else {
+                            cost = 750;
+                            if (currentSeptims >= cost) {
+                                string cell = parts[1];
+                                SkyrimViewerSeptimTracker.DeductSeptims(username, cost);
+                                PendingRedemptions.AddPendingRedemption(username, $"!coc|{cell}");
+                                bot.Client.SendMessage(Configuration.channelName, $"{username} is teleporting the player to {cell}!");
+                            }
+                            else {
+                                bot.Client.SendMessage(Configuration.channelName, $"{username} does not have enough septims for " + message);
+                            }
+                        }
                     }
                 }
             }

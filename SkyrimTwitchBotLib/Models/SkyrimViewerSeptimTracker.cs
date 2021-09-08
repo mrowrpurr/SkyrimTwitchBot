@@ -10,10 +10,10 @@ namespace SkyrimTwitchBotLib.Models
 {
     public class SkyrimViewerSeptimTracker
     {
-        // public static DateTime STREAM_START_TIME = DateTime.Parse("9/7/2021 6:00:00 PM"); // Placeholder for real logic and stuffs!
+        public static DateTime STREAM_START_TIME = DateTime.Parse("9/7/2021 7:30:00 PM"); // Placeholder for real logic and stuffs!
 
         // FOR TESTING
-        public static DateTime STREAM_START_TIME = DateTime.Parse("9/7/2021 3:00:00 PM"); // Placeholder for real logic and stuffs!
+        // public static DateTime STREAM_START_TIME = DateTime.Parse("9/7/2021 1:00:00 PM"); // Placeholder for real logic and stuffs!
 
         public static Dictionary<string, SkyrimViewer> CurrentViewerStats { get => JsonConvert.DeserializeObject<Dictionary<string, SkyrimViewer>>(File.ReadAllText(SkyrimTwitchBotFolder.ViewerSeptimTrackingFilePath)); }
 
@@ -32,7 +32,10 @@ namespace SkyrimTwitchBotLib.Models
                 int userDeductedSeptims = thisUser.SeptimsSpent;
                 int extraSeptims = thisUser.ValidChatMessagesReceived * 10;
                 int total = currentSeptims - userDeductedSeptims + extraSeptims;
-                return total;
+                if (total < 0)
+                    return 0;
+                else
+                    return total;
             } else {
                 return GetCurrentSeptimsIfNoneSpent();
             }
@@ -78,8 +81,9 @@ namespace SkyrimTwitchBotLib.Models
         }
 
         public static int GetCurrentSeptimsIfNoneSpent() {
+            var startingSeptims = 250;
             var duration = DateTime.Now - STREAM_START_TIME;
-            return duration.Minutes * 10;
+            return (duration.Minutes * 10) + startingSeptims;
         }
     }
 }
