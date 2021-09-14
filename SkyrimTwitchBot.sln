@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyrimTwitchBot", "SkyrimTwitchBot\SkyrimTwitchBot.csproj", "{7B2EF302-1ADB-4CD3-9651-3492BD867DC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyrimTwitchBot", "SkyrimTwitchBot\SkyrimTwitchBot.csproj", "{7B2EF302-1ADB-4CD3-9651-3492BD867DC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyrimTwitchBotLib", "SkyrimTwitchBotLib\SkyrimTwitchBotLib.csproj", "{1C2126AF-39EA-4D38-9D5F-78A4816E5AB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyrimTwitchBotLib", "SkyrimTwitchBotLib\SkyrimTwitchBotLib.csproj", "{1C2126AF-39EA-4D38-9D5F-78A4816E5AB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyrimTwitchBot.Data", "SkyrimTwitchBot.Data\SkyrimTwitchBot.Data.csproj", "{2DAF254E-FFD6-4F9F-932D-3AFD4F3AC6D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1C2126AF-39EA-4D38-9D5F-78A4816E5AB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C2126AF-39EA-4D38-9D5F-78A4816E5AB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C2126AF-39EA-4D38-9D5F-78A4816E5AB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DAF254E-FFD6-4F9F-932D-3AFD4F3AC6D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DAF254E-FFD6-4F9F-932D-3AFD4F3AC6D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DAF254E-FFD6-4F9F-932D-3AFD4F3AC6D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DAF254E-FFD6-4F9F-932D-3AFD4F3AC6D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

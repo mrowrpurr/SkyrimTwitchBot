@@ -29,6 +29,7 @@ namespace SkyrimTwitchBot
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SkyrimTwitchBotUI));
             this.Button_NewStream = new System.Windows.Forms.Button();
             this.Label_BotUsername = new System.Windows.Forms.Label();
             this.Text_BotUsername = new System.Windows.Forms.TextBox();
@@ -232,6 +233,7 @@ namespace SkyrimTwitchBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(818, 553);
             this.Controls.Add(this.Button_ContinueStream);
             this.Controls.Add(this.Text_StreamName);
@@ -252,8 +254,9 @@ namespace SkyrimTwitchBot
             this.Controls.Add(this.Text_BotUsername);
             this.Controls.Add(this.Label_BotUsername);
             this.Controls.Add(this.Button_NewStream);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SkyrimTwitchBotUI";
-            this.Text = "Skyrim Twitch Bot";
+            this.Text = "Skyrim Twitch Bot ~ by Mrowr Purr";
             this.Load += new System.EventHandler(this.OnInit);
             this.ResumeLayout(false);
             this.PerformLayout();

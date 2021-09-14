@@ -18,6 +18,7 @@ using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Models;
 using TwitchLib.Communication.Events;
+using TwitchLib.PubSub;
 
 namespace SkyrimTwitchBot
 {
@@ -88,6 +89,11 @@ namespace SkyrimTwitchBot
         }
 
         private void OnInit(object sender, EventArgs e) {
+            // var pubsub = new TwitchPubSub();
+            // pubsub.
+
+            ///
+
             DateTime today = DateTime.Today;
             this.Text_StreamName.Text = $"{today.Month}-{today.Day}-{today.Year}";
 
@@ -183,6 +189,7 @@ namespace SkyrimTwitchBot
         void Connect() {
             if (!_clientEventHandlersConfigured) {
                 bot.Setup(Configuration);
+                // bot.Client.on
                 // Connectivity
                 bot.Client.OnLog += Client_OnLog;
                 bot.Client.OnConnected += Client_OnConnected;
@@ -190,6 +197,7 @@ namespace SkyrimTwitchBot
                 // Message Handling
                 bot.Client.OnMessageReceived += Client_OnMessageReceived;
                 bot.Client.OnWhisperReceived += Client_OnWhisperReceived;
+                // bot.Client.on
                 _clientEventHandlersConfigured = true;
             }
             bot.Connect();
@@ -221,16 +229,18 @@ namespace SkyrimTwitchBot
             if ((DateTime.Now - timeOfLastInfoMessage).Minutes > 40 && countOfChatMessagesSinceLastInfoMessage > 20) {
                 countOfChatMessagesSinceLastInfoMessage = 0;
                 timeOfLastInfoMessage = DateTime.Now;
-                bot.Client.SendMessage(Configuration.channelName, "Mrowr Purr authors tutorials on Creation Kit and creating Skyrim Mods at https://www.youtube.com/channel/UCS8mvo8o60dgPQe9WJRp2qQ (Skyrim Scripting)");
+                bot.Client.SendMessage(Configuration.channelName, "mrowrpTEA @MrowrPurr authors tutorials on Creation Kit and creating Skyrim Mods at \"Skyrim Scripting\": https://www.youtube.com/channel/UCS8mvo8o60dgPQe9WJRp2qQ mrowrpHI");
             }
 
             LogEvent($"Chat Message from {e.ChatMessage.UserId} " + e.ChatMessage.Username + ": " + e.ChatMessage.Message);
+
             // Just hack it for right now and check for literal strings, we'll revisit this :)
             int cost;
             string message = e.ChatMessage.Message;
             string username = e.ChatMessage.Username;
             SkyrimViewerSeptimTracker.TrackChatMessage(username);
-            if (message.StartsWith("!") && message != "!youtube" && message != "!mods") {
+
+            if (message.StartsWith("!")) {
                 int currentSeptims = SkyrimViewerSeptimTracker.GetSeptimCount(username);
                 if (username.ToLower() == "mrowrpurr" || username.ToLower() == "mrowrbot") {
                     currentSeptims = 10000;
@@ -238,7 +248,7 @@ namespace SkyrimTwitchBot
                 if (message == "!septims") {
                     bot.Client.SendMessage(Configuration.channelName, $"{username} currently has {currentSeptims} septims");
                 } else if (message == "!youtube") {
-                    bot.Client.SendMessage(Configuration.channelName, "Mrowr Purr authors tutorials on Creation Kit and creating Skyrim Mods at https://www.youtube.com/channel/UCS8mvo8o60dgPQe9WJRp2qQ (Skyrim Scripting)");
+                    bot.Client.SendMessage(Configuration.channelName, "mrowrpTEA @MrowrPurr authors tutorials on Creation Kit and creating Skyrim Mods at \"Skyrim Scripting\": https://www.youtube.com/channel/UCS8mvo8o60dgPQe9WJRp2qQ mrowrpHI");
                 } else if (message == "!mods") {
                     bot.Client.SendMessage(Configuration.channelName, "Mrowr Purr's Mod List: https://github.com/mrowrpurr/mods (it is a very short list)");
                 } else if (message == "!game") {
